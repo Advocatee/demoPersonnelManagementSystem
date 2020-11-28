@@ -42,4 +42,10 @@ public class DepartmentController {
         return toDepartmentDto;
     }
 
+    @DeleteMapping(value = "/deleteDepartment/{id}")
+    public void deleteDepartmentDro(@PathVariable UUID id) {
+        Department departmentById = departmentService.getDepartmentById(id);
+        departmentService.remove(departmentById);
+    }
+
 }

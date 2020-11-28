@@ -31,4 +31,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department saveDepartment(Department department) {
         return departmentRepository.save(department);
     }
+
+    @Override
+    public void remove(Department department) {
+        departmentRepository.delete(department);
+    }
 }

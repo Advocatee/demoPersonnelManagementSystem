@@ -13,4 +13,6 @@ public interface DepartmentService {
 
     Department saveDepartment(Department department);
 
+    void remove(Department department);
+
 }
