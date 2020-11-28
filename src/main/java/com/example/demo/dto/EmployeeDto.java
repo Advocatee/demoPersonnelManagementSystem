@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,6 @@ public class EmployeeDto extends BaseDto {
     private String emailAddress;
     private String position;
     private Date dateOfEmployment;
-    private List<DepartmentDto> departmentDtoList;
+    private List<DepartmentDto> departmentDtoList = new ArrayList<>();
 
 }

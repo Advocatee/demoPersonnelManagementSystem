@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +18,10 @@ public class Employee extends BaseEntity {
     private String emailAddress;
     private String position;
     private Date dateOfEmployment;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "EMPLOYEE_DEPARTMENT", joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "id")})
-    private List<Department> departments;
+    private List<Department> departments = new ArrayList<>();
 
     @Override
     public String toString() {

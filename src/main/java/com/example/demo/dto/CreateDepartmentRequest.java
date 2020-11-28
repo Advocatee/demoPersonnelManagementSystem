@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class DepartmentDto extends BaseDto {
+public class CreateDepartmentRequest {
 
+    private String phoneNumber;
     private String name;
     private String description;
     private Date dateOfInformation;
     private List<EmployeeDto> employeeDtoList = new ArrayList<>();
-
 }
