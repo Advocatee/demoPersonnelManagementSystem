@@ -13,5 +13,5 @@ public class CreateDepartmentRequest {
     private String name;
     private String description;
     private Date dateOfInformation;
-    private List<EmployeeDto> employeeDtoList = new ArrayList<>();
+    private List<CreateShortEmployeeRequest> employeeDtoList = new ArrayList<>();
 }

@@ -5,7 +5,7 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -16,17 +16,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    @Override
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
-    }
 
     @Override
-    public Employee save(Employee employee) {
-        if (employee.getDepartments() == null) {
-            throw new NullPointerException();
-        }
-
-        return employeeRepository.save(employee);
+    public Employee getEmployeeByUUID(UUID id) {
+        return employeeRepository.getOne(id);
     }
 }

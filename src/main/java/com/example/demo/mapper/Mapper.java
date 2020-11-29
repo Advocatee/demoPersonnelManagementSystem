@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.CreateDepartmentRequest;
+import com.example.demo.dto.CreateShortEmployeeRequest;
 import com.example.demo.dto.DepartmentDto;
 import com.example.demo.dto.EmployeeDto;
 import com.example.demo.model.Department;
@@ -83,7 +84,6 @@ public class Mapper {
         employee.setEmailAddress(employeeDto.getEmailAddress());
         employee.setPosition(employeeDto.getPosition());
         employee.setDateOfEmployment(employeeDto.getDateOfEmployment());
-        /*employee.setDepartments(convertDepartmentDtoListToDepartmentList(employeeDto.getDepartmentDtoList()));*/
         return employee;
     }
 
@@ -108,24 +108,41 @@ public class Mapper {
         employeeDto.setEmailAddress(employee.getEmailAddress());
         employeeDto.setPosition(employee.getPosition());
         employeeDto.setDateOfEmployment(employee.getDateOfEmployment());
-        employeeDto.setDepartmentDtoList(convertDepartmentListToDepartmentDtoList(employee.getDepartments()));
         return employeeDto;
     }
 
-    public Department toDepartmentFromCreateDepartmentRequest(CreateDepartmentRequest createDepartmentRequest) {
+    public Department fromDtoWithEmployees(CreateDepartmentRequest createDepartmentRequest) {
         Department department = new Department();
         department.setPhoneNumber(createDepartmentRequest.getPhoneNumber());
         department.setName(createDepartmentRequest.getName());
         department.setDescription(createDepartmentRequest.getDescription());
         department.setDateOfInformation(createDepartmentRequest.getDateOfInformation());
-        department.setEmployees(convertEmployeeDtoListToEmployeeList(createDepartmentRequest.getEmployeeDtoList()));
+        department.setEmployees(convertToEmployeeList(createDepartmentRequest.getEmployeeDtoList()));
         return department;
     }
 
+    public List<Employee> convertToEmployeeList(List<CreateShortEmployeeRequest> employeeRequests) {
+        if (employeeRequests == null) {
+            return null;
+        }
+        List<Employee> employeeList = new ArrayList<>(employeeRequests.size());
+        for (CreateShortEmployeeRequest dto : employeeRequests
+        ) {
+            employeeList.add(toEmployeeDto(dto));
+        }
+        return employeeList;
+    }
 
-//    public DepartmentDto getDepartment(UUID id) {
-////        Department department = departmentService.getDepartmentById(id);
-////        return toDepartmentDto(department);
-//        return null;
-//    }
+    public Employee toEmployeeDto(CreateShortEmployeeRequest employeeRequest) {
+        Employee employee = new Employee();
+        employee.setPhoneNumber(employeeRequest.getPhoneNumber());
+        employee.setFullName(employeeRequest.getFullName());
+        employee.setDateOfBirth(employeeRequest.getDateOfBirth());
+        employee.setEmailAddress(employeeRequest.getEmailAddress());
+        employee.setPosition(employeeRequest.getPosition());
+        employee.setDateOfEmployment(employeeRequest.getDateOfEmployment());
+        return employee;
+    }
+
+
 }

@@ -2,12 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.model.Employee;
 
-import java.util.List;
+import java.util.UUID;
 
 public interface EmployeeService {
 
-    List<Employee> getAll();
-
-    Employee save(Employee employee);
+    Employee getEmployeeByUUID(UUID id);
 
 }

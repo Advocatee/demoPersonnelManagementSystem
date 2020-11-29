@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class CreateShortEmployeeRequest {
 
+    private String phoneNumber;
     private String fullName;
     private Date dateOfBirth;
     private String emailAddress;
