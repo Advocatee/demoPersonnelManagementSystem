@@ -15,4 +15,6 @@ public interface DepartmentService {
 
     void remove(Department department);
 
+    void deleteEmployeeFromDepartment(UUID departmentId, UUID employeeId);
+
 }

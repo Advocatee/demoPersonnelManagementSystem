@@ -18,7 +18,7 @@ public class Employee extends BaseEntity {
     private String emailAddress;
     private String position;
     private Date dateOfEmployment;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "EMPLOYEE_DEPARTMENT", joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "id")}
             , inverseJoinColumns = {@JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "id")})
     private List<Department> departments = new ArrayList<>();

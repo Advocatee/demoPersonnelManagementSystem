@@ -1,9 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.CreateDepartmentRequest;
-import com.example.demo.dto.CreateShortEmployeeRequest;
-import com.example.demo.dto.DepartmentDto;
-import com.example.demo.dto.EmployeeDto;
+import com.example.demo.dto.*;
 import com.example.demo.model.Department;
 import com.example.demo.model.Employee;
 import lombok.Data;
@@ -70,7 +67,7 @@ public class Mapper {
         List<EmployeeDto> employeeDtoList = new ArrayList<>(employeeList.size());
         for (Employee employee :
                 employeeList) {
-            employeeDtoList.add(toEmployeeDto(employee));
+            employeeDtoList.add(toEmployee(employee));
         }
         return employeeDtoList;
     }
@@ -99,7 +96,7 @@ public class Mapper {
         return employeeList;
     }
 
-    public EmployeeDto toEmployeeDto(Employee employee) {
+    public EmployeeDto toEmployee(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setId(employee.getId());
         employeeDto.setPhoneNumber(employee.getPhoneNumber());
@@ -128,12 +125,23 @@ public class Mapper {
         List<Employee> employeeList = new ArrayList<>(employeeRequests.size());
         for (CreateShortEmployeeRequest dto : employeeRequests
         ) {
-            employeeList.add(toEmployeeDto(dto));
+            employeeList.add(toEmployee(dto));
         }
         return employeeList;
     }
 
-    public Employee toEmployeeDto(CreateShortEmployeeRequest employeeRequest) {
+    public Employee toEmployee(CreateShortEmployeeRequest employeeRequest) {
+        Employee employee = new Employee();
+        employee.setPhoneNumber(employeeRequest.getPhoneNumber());
+        employee.setFullName(employeeRequest.getFullName());
+        employee.setDateOfBirth(employeeRequest.getDateOfBirth());
+        employee.setEmailAddress(employeeRequest.getEmailAddress());
+        employee.setPosition(employeeRequest.getPosition());
+        employee.setDateOfEmployment(employeeRequest.getDateOfEmployment());
+        return employee;
+    }
+
+    public Employee toEmployee(CreateEmployeeRequest employeeRequest) {
         Employee employee = new Employee();
         employee.setPhoneNumber(employeeRequest.getPhoneNumber());
         employee.setFullName(employeeRequest.getFullName());

@@ -55,4 +55,21 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void remove(Department department) {
         departmentRepository.delete(department);
     }
+
+    @Override
+    public void deleteEmployeeFromDepartment(UUID departmentId, UUID employeeId) {
+        Department department = getDepartmentById(departmentId);
+        List<Employee> employeeList = department.getEmployees();
+        List<Employee> employees = new ArrayList<>();
+        for (Employee employee : employeeList
+        ) {
+            if (employee.getId().equals(employeeId)) {
+                employee.getDepartments().removeIf(department1 -> department.getId().equals(departmentId));
+                employeeRepository.save(employee);
+            } else {
+                employees.add(employee);
+            }
+        }
+        departmentRepository.save(department);
+    }
 }
