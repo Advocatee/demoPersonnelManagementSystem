@@ -8,9 +8,7 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -35,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (departmentId != null) {
             departmentRepository.findById(departmentId)
                     .ifPresentOrElse((department -> {
-                        List<Department> depList = new ArrayList<>();
+                        Set<Department> depList = new HashSet<>();
                         depList.add(department);
                         employee.setDepartments(depList);
                     }), () -> {

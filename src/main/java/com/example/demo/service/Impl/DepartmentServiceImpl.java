@@ -72,4 +72,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         departmentRepository.save(department);
     }
+
+    @Override
+    public void addEmployeeToDepartment(UUID departmentId, UUID employeeId) {
+        Department departmentById = departmentRepository.findById(departmentId).orElseThrow(NullPointerException::new);
+        Employee employeeById = employeeRepository.findById(employeeId).orElseThrow(NullPointerException::new);
+        if (departmentById == null || employeeId == null) {
+            throw new NullPointerException();
+        } else {
+            departmentById.getEmployees().add(employeeById);
+            departmentRepository.save(departmentById);
+            employeeById.getDepartments().add(departmentById);
+            employeeRepository.save(employeeById);
+        }
+    }
 }

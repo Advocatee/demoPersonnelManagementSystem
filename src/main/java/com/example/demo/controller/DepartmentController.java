@@ -4,11 +4,9 @@ import com.example.demo.dto.CreateDepartmentRequest;
 import com.example.demo.dto.DepartmentDto;
 import com.example.demo.mapper.Mapper;
 import com.example.demo.model.Department;
-import com.example.demo.model.Employee;
 import com.example.demo.service.Impl.DepartmentServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,4 +54,10 @@ public class DepartmentController {
     public void deleteEmployeeFromDepartment(@PathVariable UUID departmentId, @PathVariable UUID employeeId) {
         departmentService.deleteEmployeeFromDepartment(departmentId, employeeId);
     }
+
+    @PostMapping("/Departments/{departmentId}/Employees/{employeeId}")
+    public void addEmployeeToDepartment(@PathVariable UUID departmentId, @PathVariable UUID employeeId) {
+        departmentService.addEmployeeToDepartment(departmentId, employeeId);
+    }
+
 }
