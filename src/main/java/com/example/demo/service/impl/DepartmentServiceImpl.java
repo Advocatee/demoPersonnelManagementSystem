@@ -1,5 +1,6 @@
-package com.example.demo.service.Impl;
+package com.example.demo.service.impl;
 
+import com.example.demo.exception.DepartmentNotFound;
 import com.example.demo.model.Department;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.DepartmentRepository;
@@ -36,11 +37,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department saveDepartment(Department department) throws NullPointerException {
+        List<Employee> employees = department.getEmployees();
         List<Employee> savedEmployees = new ArrayList<>();
-        if (CollectionUtils.isEmpty(department.getEmployees())) {
-            throw new NullPointerException();
+        if (CollectionUtils.isEmpty(employees)) {
+            throw new DepartmentNotFound();
         }
-        for (Employee employee : department.getEmployees()
+        for (Employee employee : employees
         ) {
             if (employee != null) {
                 employee.getDepartments().add(department);
@@ -52,22 +54,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void remove(Department department) {
-        departmentRepository.delete(department);
+    public void removeDepartmentById(UUID uuid) {
+        departmentRepository.deleteById(uuid);
     }
 
     @Override
     public void deleteEmployeeFromDepartment(UUID departmentId, UUID employeeId) {
         Department department = getDepartmentById(departmentId);
         List<Employee> employeeList = department.getEmployees();
-        List<Employee> employees = new ArrayList<>();
         for (Employee employee : employeeList
         ) {
             if (employee.getId().equals(employeeId)) {
                 employee.getDepartments().removeIf(department1 -> department.getId().equals(departmentId));
                 employeeRepository.save(employee);
-            } else {
-                employees.add(employee);
             }
         }
         departmentRepository.save(department);
@@ -77,7 +76,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void addEmployeeToDepartment(UUID departmentId, UUID employeeId) {
         Department departmentById = departmentRepository.findById(departmentId).orElseThrow(NullPointerException::new);
         Employee employeeById = employeeRepository.findById(employeeId).orElseThrow(NullPointerException::new);
-        if (departmentById == null || employeeId == null) {
+        if (departmentById == null) {
             throw new NullPointerException();
         } else {
             departmentById.getEmployees().add(employeeById);

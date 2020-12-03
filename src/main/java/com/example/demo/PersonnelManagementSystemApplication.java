@@ -8,6 +8,8 @@ public class PersonnelManagementSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PersonnelManagementSystemApplication.class, args);
-    }
 
+    }
 }
+
+

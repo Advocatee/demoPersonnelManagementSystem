@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     Employee saveEmployee(Employee employee, UUID departmentId) throws BadHttpRequest;
 
-    void remove(Employee employee);
+    void removeEmployeeById(UUID uuid);
 
     List<Employee> getAllEmployeeWitchDontBelongToAnyDepartment();
 

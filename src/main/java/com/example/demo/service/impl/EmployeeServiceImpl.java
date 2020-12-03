@@ -1,4 +1,4 @@
-package com.example.demo.service.Impl;
+package com.example.demo.service.impl;
 
 import com.example.demo.exception.DepartmentNotFound;
 import com.example.demo.model.Department;
@@ -45,8 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void remove(Employee employee) {
-        employeeRepository.delete(employee);
+    public void removeEmployeeById(UUID uuid) {
+        employeeRepository.deleteById(uuid);
     }
 
     @Override

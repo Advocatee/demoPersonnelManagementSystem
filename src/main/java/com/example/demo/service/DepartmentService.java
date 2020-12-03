@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.model.Department;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public interface DepartmentService {
@@ -14,7 +13,7 @@ public interface DepartmentService {
 
     Department saveDepartment(Department department);
 
-    void remove(Department department);
+    void removeDepartmentById(UUID uuid);
 
     void deleteEmployeeFromDepartment(UUID departmentId, UUID employeeId);
 

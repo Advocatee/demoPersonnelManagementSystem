@@ -5,7 +5,7 @@ import com.example.demo.dto.EmployeeDto;
 import com.example.demo.exception.DepartmentNotFound;
 import com.example.demo.mapper.Mapper;
 import com.example.demo.model.Employee;
-import com.example.demo.service.Impl.EmployeeServiceImpl;
+import com.example.demo.service.impl.EmployeeServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,36 +25,34 @@ public class EmployeeController {
         this.mapper = mapper;
     }
 
-    @GetMapping("/Employees/{id}")
-    public EmployeeDto getEmployeeByUUID(@PathVariable UUID id) {
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<EmployeeDto> getEmployeeByUUID(@PathVariable UUID id) {
         Employee employeeById = employeeService.getEmployeeByUUID(id);
-        return mapper.toEmployee(employeeById);
+        return ResponseEntity.ok(mapper.toEmployee(employeeById));
     }
 
-    @PostMapping("/Employees")
+    @PostMapping("/employees")
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
-        EmployeeDto employeeDto = null;
         try {
+            EmployeeDto employeeDto = null;
             Employee employee = employeeService.saveEmployee(mapper.toEmployee(createEmployeeRequest), createEmployeeRequest.getDepartmentId());
             employeeDto = mapper.toEmployee(employee);
+            return ResponseEntity.ok(employeeDto);
         } catch (DepartmentNotFound e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(employeeDto);
     }
 
-    @DeleteMapping("/Employees/{id}")
-    public void deleteEmployeeDto(@PathVariable UUID id) {
-        Employee employeeByUUID = employeeService.getEmployeeByUUID(id);
-        if (employeeByUUID == null) {
-            throw new NullPointerException();
-        }
-        employeeService.remove(employeeByUUID);
+    @DeleteMapping("/employees/{id}")
+    public ResponseEntity<Void> deleteEmployeeDto(@PathVariable UUID id) {
+        employeeService.removeEmployeeById(id);
+        return ResponseEntity.ok().build();
+
     }
 
-    @GetMapping("/Employees")
-    public List<EmployeeDto> getAllEmployeeWitchDontBelongToAnyDepartment() {
-        return mapper.convertEmployeeListToEmployeeDtoList(employeeService.getAllEmployeeWitchDontBelongToAnyDepartment());
+    @GetMapping("/employees")
+    public ResponseEntity<List<EmployeeDto>> getAllEmployeeWitchDontBelongToAnyDepartment() {
+        return ResponseEntity.ok(mapper.convertEmployeeListToEmployeeDtoList(employeeService.getAllEmployeeWitchDontBelongToAnyDepartment()));
     }
 
 }
